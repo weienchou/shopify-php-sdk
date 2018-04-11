@@ -59,15 +59,13 @@ class TransactionService extends AbstractService
      * @param  Transaction $transaction
      * @return void
      */
-    public function create(Transaction &$transaction)
+    public function create($orderId, Transaction &$transaction)
     {
         $data = $transaction->exportData();
-        $endpoint = '/admin/transactions.json';
-        $response = $this->request(
-            $endpoint, 'POST', array(
-            'transaction' => $data
-            )
-        );
+        $endpoint = '/admin/orders/'.$orderId.'/transactions.json';
+        $response = $this->request($endpoint, 'POST', array(
+                'transaction' => $data,
+            ));
         $transaction->setData($response['transaction']);
     }
 }
