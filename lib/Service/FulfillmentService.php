@@ -8,21 +8,21 @@ class FulfillmentService extends AbstractService
 {
     public function all($orderId, array $params = array())
     {
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments.json';
         $response = $this->request($endpoint, 'GET', $params);
         return $this->createCollection(Fulfillment::class, $response['fulfillments']);
     }
 
     public function count($orderId, array $params = array())
     {
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments/count.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments/count.json';
         $response = $this->request($endpoint, 'GET', $params);
         return $response['count'];
     }
 
     public function get($orderId, $fulfillmentId, array $params = array())
     {
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments/'.$fulfillmentId.'.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments/' . $fulfillmentId . '.json';
         $response = $this->request($endpoint, 'GET', $params);
         return $this->createObject(Fulfillment::class, $response['fulfillments']);
     }
@@ -30,10 +30,12 @@ class FulfillmentService extends AbstractService
     public function create($orderId, Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments.json';
         $response = $this->request(
-            $endpoint, 'POST', array(
-            'fulfillment' => $data
+            $endpoint,
+            'POST',
+            array(
+                'fulfillment' => $data,
             )
         );
         $fulfillment->setData($response['fulfillment']);
@@ -42,10 +44,12 @@ class FulfillmentService extends AbstractService
     public function update($orderId, Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments/'.$fulfillment->gtId().'.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '.json';
         $response = $this->request(
-            $endpoint, 'POST', array(
-            'fulfillment' => $data
+            $endpoint,
+            'POST',
+            array(
+                'fulfillment' => $data,
             )
         );
         $fulfillment->setData($response['fulfillment']);
@@ -54,7 +58,7 @@ class FulfillmentService extends AbstractService
     public function complete($orderId, Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments/'.$fulfillment->getId().'/complete.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '/complete.json';
         $response = $this->request($endpoint, 'POST');
         $fulfillment->setData($response['fulfillment']);
     }
@@ -62,7 +66,7 @@ class FulfillmentService extends AbstractService
     public function cancel($orderId, Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments/'.$fulfillment->getId().'/cancel.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '/cancel.json';
         $response = $this->request($endpoint, 'POST');
         $fulfillment->setData($response['fulfillment']);
     }
@@ -70,7 +74,7 @@ class FulfillmentService extends AbstractService
     public function open($orderId, Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = '/admin/orders/'.$orderId.'/fulfillments/'.$fulfillment->getId().'/open.json';
+        $endpoint = '/admin/orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '/open.json';
         $response = $this->request($endpoint, 'POST');
         $fulfillment->setData($response->fulfillment);
     }
